@@ -5,7 +5,7 @@ import java.util.List;
 
 //All documentation is needed.
 
-public class Code implements Cloneable{
+public class Code implements Cloneable {
 
 	private List<? extends Colour> code;
 
@@ -14,31 +14,48 @@ public class Code implements Cloneable{
 	}
 
 	public List<Colour> getCode() {
-		List<Colour> clonedCode = new ArrayList<Colour>(this.code.size());
-		for (Colour c : this.code) {
-			clonedCode.add(c);
-		}
-		return clonedCode;
+		return (List<Colour>)this.code;
 	}
 
 	public int getLength() {
 		return this.code.size();
 	}
 
-	//TODO
 	public int[] howManyCorrect(Code other) {
-		return null; 
+		int correctPosition = 0, wrongPosition = 0;
+		List<Colour> userTry = other.getCode(); 
+		
+		for (int i = 0; i < other.getLength(); i++) {
+			Colour currentColour = userTry.get(i);
+			
+			if (this.code.contains(currentColour)) {
+				if (this.code.get(i) == userTry.get(i)) 
+					correctPosition++;
+				else 
+					wrongPosition++;
+			}
+		}
+		
+		int[] result = {correctPosition, wrongPosition};
+		return result;
 	}
 
-	//TODO
 	@Override
 	public String toString() {
-		return "String representation";
+		StringBuilder sb = new StringBuilder();
+		for (Colour colour : this.code)
+			sb.append(colour);
+		
+		return sb.toString();
 	}
 
 	@Override
 	public Code clone() {
-		return new Code(this.getCode());
+		List<Colour> clonedCode = new ArrayList<Colour>();
+		for (Colour colour : this.code) 
+			clonedCode.add(colour);
+		
+		return new Code(clonedCode);
 	}
 
 	@Override

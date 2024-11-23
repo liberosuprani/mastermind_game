@@ -7,17 +7,21 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Bem vindo ao jogo Mastermind!\nPara jogar, selecione uma opção.\n");
-        System.out.println("1 - Mastermind original\n2 - Bulls and cows\nOpção: ");
-        int opcao = sc.nextInt();
+        int opcao = 0;
+        System.out.println("Bem vindo ao jogo Mastermind!\n\nPara jogar, selecione uma opção.\n");
 
-        // Mastermind
-        if (opcao == 1) {
-            
+        while (opcao != 1 && opcao != 2 && opcao != 3) {
+	        System.out.print("1 - Mastermind original\n2 - Bulls and cows\n3: Sair do jogo\nOpção: ");
+	        opcao = sc.nextInt();
+	        
+	        
+	        if (opcao != 1 && opcao != 2 && opcao != 3) {
+	        	System.out.printf("\n--------------------\nOpção inválida!\n\n");
+	        }
         }
-        // Bulls and cows
-        else if (opcao == 2) {
-
+        
+        if (opcao != 3) {
+     	
         }
             
     }
