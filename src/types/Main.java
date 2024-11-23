@@ -21,7 +21,7 @@ public class Main {
         }
         
         if (opcao != 3) {
-     	
+        	//TODO começar o jogo baseado no modo escolhido pelo usuário
         }
             
     }
