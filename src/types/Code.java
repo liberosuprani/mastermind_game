@@ -1,7 +1,9 @@
 package types;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //All documentation is needed.
 
@@ -23,20 +25,35 @@ public class Code implements Cloneable {
 
 	public int[] howManyCorrect(Code other) {
 		int correctPosition = 0, wrongPosition = 0;
-		List<Colour> userTry = other.getCode(); 
+		
+		List<Colour> userTry = other.getCode();
+		
+		List<? extends Colour> secret = this.code;
+		List<Colour> clonedSecret = this.clone().getCode();
+		
+		Map<Integer, Colour> wrongPositionMap = new HashMap<Integer, Colour>();
 		
 		for (int i = 0; i < other.getLength(); i++) {
 			Colour currentColour = userTry.get(i);
 			
-			if (this.code.contains(currentColour)) {
-				if (this.code.get(i) == userTry.get(i)) 
+			if (clonedSecret.contains(currentColour)) {
+				int firstAppearance = clonedSecret.indexOf(currentColour);
+				
+				if (userTry.get(i) == secret.get(i)) {
 					correctPosition++;
-				else 
-					wrongPosition++;
+					clonedSecret.remove(currentColour);
+					
+					if (wrongPositionMap.containsKey(firstAppearance))
+						wrongPositionMap.remove(firstAppearance);
+				}
+				else if (!wrongPositionMap.containsKey(firstAppearance))
+					wrongPositionMap.put(firstAppearance, currentColour);
 			}
 		}
 		
-		int[] result = {correctPosition, wrongPosition};
+		
+		
+		int[] result = {correctPosition, wrongPositionMap.size()};
 		return result;
 	}
 
