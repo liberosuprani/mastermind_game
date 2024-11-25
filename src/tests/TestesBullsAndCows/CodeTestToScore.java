@@ -1,16 +1,16 @@
-package TestesBullsAndCows;
+package tests.TestesBullsAndCows;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import types.BinaryColour;
 import types.BullsAndCows;
 import types.Code;
-import types.MastermindGame;
 
-
-class CodeTestIsRoundended {
+class CodeTestToScore {
 
 	public static String EOL = System.lineSeparator();
 
@@ -23,9 +23,8 @@ class CodeTestIsRoundended {
 
 		this.jogo = new BullsAndCows(0, 6, binario);
 
-		boolean expected = false;
-
-		boolean actual = jogo.isRoundFinished();
+		int expected = 0;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
 
@@ -52,14 +51,11 @@ class CodeTestIsRoundended {
 		Code tentativa = new Code(trial);
 		jogo.play(tentativa);
 
-		boolean expected = false;
-
-		boolean actual = jogo.isRoundFinished();
+		int expected = 0;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
 	}
-	
-	
 
 	@Test
 	void teste3() {
@@ -81,9 +77,8 @@ class CodeTestIsRoundended {
 		jogo.play(tentativa);
 		jogo.play(tentativa);
 
-		boolean expected = false;
-
-		boolean actual = jogo.isRoundFinished();
+		int expected = 0;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
 	}
@@ -115,11 +110,10 @@ class CodeTestIsRoundended {
 
 		jogo.play(tentativa);
 
-		boolean expected = false;
+		int expected = 0;
+		int actual = jogo.score();
 
-		boolean actual = jogo.isRoundFinished();
-
-		assertEquals(expected, actual);;
+		assertEquals(expected, actual);
 	}
 
 	@Test
@@ -161,12 +155,12 @@ class CodeTestIsRoundended {
 
 		jogo.play(tentativa);
 
-		boolean expected = true;
-
-		boolean actual = jogo.isRoundFinished();
+		int expected = 2000;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
 	}
+	
 	
 	@Test
 	void teste6() {
@@ -185,45 +179,33 @@ class CodeTestIsRoundended {
 		trial.add(BinaryColour.BLACK);
 
 		Code tentativa = new Code(trial);
-		
-		for (int i = 1; i < MastermindGame.MAX_TRIALS; i++) {
-			jogo.play(tentativa);
-		}
-		
+		jogo.play(tentativa);
+		jogo.play(tentativa);
 
-		boolean expected = false;
+		trial.removeLast();
+		trial.add(BinaryColour.WHITE);
 
-		boolean actual = jogo.isRoundFinished();
+		tentativa = new Code(trial);
 
-		assertEquals(expected, actual);
-	}
-	
-	@Test
-	void teste7() {
+		jogo.play(tentativa);
 
-		BinaryColour[] binario = BinaryColour.values();
-
-		this.jogo = new BullsAndCows(0, 6, binario);
-
-		ArrayList<BinaryColour> trial = new ArrayList<BinaryColour>();
-
+		trial.clear();
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.WHITE);
 		trial.add(BinaryColour.BLACK);
-		trial.add(BinaryColour.BLACK);
-		trial.add(BinaryColour.BLACK);
-		trial.add(BinaryColour.BLACK);
-		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.WHITE);
 		trial.add(BinaryColour.BLACK);
 
-		Code tentativa = new Code(trial);
-		
-		for (int i = 0; i <= MastermindGame.MAX_TRIALS; i++) {
-			jogo.play(tentativa);
-		}
+		tentativa = new Code(trial);
+
+		jogo.play(tentativa);
 		
 
-		boolean expected = true;
-
-		boolean actual = jogo.isRoundFinished();
+		jogo.startNewRound();
+		
+		int expected = 2000;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
 	}

@@ -1,4 +1,4 @@
-package TestesMulticolourMastermingGame;
+package tests.TestesMulticolourMastermingGame;
 
 import static org.junit.jupiter.api.Assertions.*;
 

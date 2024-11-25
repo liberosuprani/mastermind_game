@@ -1,4 +1,4 @@
-package TestesBullsAndCows;
+package tests.TestesBullsAndCows;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +10,7 @@ import types.BinaryColour;
 import types.BullsAndCows;
 import types.Code;
 
-class CodeTestToSTring {
+class CodeTestBestTrial {
 
 	public static String EOL = System.lineSeparator();
 
@@ -23,11 +23,9 @@ class CodeTestToSTring {
 
 		this.jogo = new BullsAndCows(0, 6, binario);
 
-		String expected = "Number of Trials = 0" + EOL
-				+ "Score = 0" + EOL
-				+ "[?, ?, ?, ?, ?, ?]" + EOL
-				+ EOL;
-		String actual = jogo.toString();
+		Code expected = null;
+
+		Code actual = jogo.bestTrial();
 
 		assertEquals(expected, actual);
 	}
@@ -52,46 +50,15 @@ class CodeTestToSTring {
 		Code tentativa = new Code(trial);
 		jogo.play(tentativa);
 
-		String expected = "Number of Trials = 1" + EOL
-				+ "Score = 0" + EOL
-				+ "[?, ?, ?, ?, ?, ?]" + EOL
-				+ "\n"
-				+ "[B, B, B, B, B, B]    2 0" + EOL;
-		String actual = jogo.toString();
+		Code expected = tentativa;
+
+		Code actual = jogo.bestTrial();
 
 		assertEquals(expected, actual);
+
 	}
 
-	@Test
-	void teste3() {
-
-		BinaryColour[] binario = BinaryColour.values();
-
-		this.jogo = new BullsAndCows(0, 6, binario);
-
-		ArrayList<BinaryColour> trial = new ArrayList<BinaryColour>();
-
-		trial.add(BinaryColour.BLACK);
-		trial.add(BinaryColour.BLACK);
-		trial.add(BinaryColour.BLACK);
-		trial.add(BinaryColour.BLACK);
-		trial.add(BinaryColour.BLACK);
-		trial.add(BinaryColour.BLACK);
-
-		Code tentativa = new Code(trial);
-		jogo.play(tentativa);
-		jogo.play(tentativa);
-
-		String expected = "Number of Trials = 2" + EOL
-				+ "Score = 0" + EOL
-				+ "[?, ?, ?, ?, ?, ?]" + EOL
-				+ "\n"
-				+ "[B, B, B, B, B, B]    2 0" + EOL;
-		String actual = jogo.toString();
-
-		assertEquals(expected, actual);
-	}
-
+	
 	@Test
 	void teste4() {
 
@@ -109,6 +76,9 @@ class CodeTestToSTring {
 		trial.add(BinaryColour.BLACK);
 
 		Code tentativa = new Code(trial);
+		
+		Code expected = tentativa;
+		
 		jogo.play(tentativa);
 		jogo.play(tentativa);
 
@@ -119,17 +89,11 @@ class CodeTestToSTring {
 
 		jogo.play(tentativa);
 
-		String expected = "Number of Trials = 3" + EOL
-				+ "Score = 0" + EOL
-				+ "[?, ?, ?, ?, ?, ?]" + EOL
-				+ "\n"
-				+ "[B, B, B, B, B, B]    2 0" + EOL
-				+ "[B, B, B, B, B, W]    1 2" + EOL;
-		String actual = jogo.toString();
-
+		Code actual = jogo.bestTrial();
+		
 		assertEquals(expected, actual);
 	}
-
+	
 	@Test
 	void teste5() {
 
@@ -169,15 +133,134 @@ class CodeTestToSTring {
 
 		jogo.play(tentativa);
 
-		String expected = "Number of Trials = 4" + EOL
-				+ "Score = 2000" + EOL
-				+ "[W, W, B, W, W, B]" + EOL
-				+ "\n"
-				+ "[B, B, B, B, B, B]    2 0" + EOL
-				+ "[B, B, B, B, B, W]    1 2" + EOL
-				+ "[W, W, B, W, W, B]    6 0" + EOL;
-		String actual = jogo.toString();
+		
+		Code expected = tentativa;
 
+		Code actual = jogo.bestTrial();
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void teste6() {
+
+		BinaryColour[] binario = BinaryColour.values();
+
+		this.jogo = new BullsAndCows(0, 6, binario);
+
+		ArrayList<BinaryColour> trial = new ArrayList<BinaryColour>();
+
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+
+		Code tentativa = new Code(trial);
+				
+		jogo.play(tentativa);
+		
+		
+		
+		trial.clear();
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.WHITE);
+
+		tentativa = new Code(trial);
+
+		jogo.play(tentativa);
+
+		Code expected = tentativa;
+		
+		Code actual = jogo.bestTrial();
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void teste7() {
+
+		BinaryColour[] binario = BinaryColour.values();
+
+		this.jogo = new BullsAndCows(0, 6, binario);
+
+		ArrayList<BinaryColour> trial = new ArrayList<BinaryColour>();
+
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.WHITE);
+
+		Code tentativa = new Code(trial);
+				
+		jogo.play(tentativa);
+		
+		Code expected = tentativa;
+		
+		trial.clear();
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.WHITE);
+
+		tentativa = new Code(trial);
+
+		jogo.play(tentativa);
+
+		
+		Code actual = jogo.bestTrial();
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void teste8() {
+
+		BinaryColour[] binario = BinaryColour.values();
+
+		this.jogo = new BullsAndCows(1, 6, binario);
+
+		ArrayList<BinaryColour> trial = new ArrayList<BinaryColour>();
+
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+
+		Code tentativa = new Code(trial);
+				
+		jogo.play(tentativa);
+		
+		
+		trial.clear();
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.WHITE);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+
+		tentativa = new Code(trial);
+
+		jogo.play(tentativa);
+
+		Code expected = tentativa;
+		
+		System.out.println(jogo);
+		
+		Code actual = jogo.bestTrial();
+		
 		assertEquals(expected, actual);
 	}
 }

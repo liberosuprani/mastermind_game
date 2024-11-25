@@ -1,4 +1,4 @@
-package TestesMulticolourMastermingGame;
+package tests.TestesMulticolourMastermingGame;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,13 +6,11 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import types.Code;
 import types.MultiColour;
 import types.MultiColourMastermindGame;
-import types.Code;
-import types.MastermindGame;
 
-
-class CodeTestIsRoundended {
+class CodeTestToScore {
 
 	public static String EOL = System.lineSeparator();
 
@@ -21,26 +19,23 @@ class CodeTestIsRoundended {
 	@Test
 	void teste1() {
 
-		MultiColour[] binario = MultiColour.values();
+		MultiColour[] multicolour = MultiColour.values();
 
-		this.jogo = new MultiColourMastermindGame(0, 6, binario);
+		this.jogo = new MultiColourMastermindGame(0, 4, multicolour);
 
-		boolean expected = false;
-
-		boolean actual = jogo.isRoundFinished();
+		int expected = 0;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
-
-
 	}
 
 
 	@Test
 	void teste2() {
 
-		MultiColour[] binario = MultiColour.values();
+		MultiColour[] multicolour = MultiColour.values();
 
-		this.jogo = new MultiColourMastermindGame(0, 6, binario);
+		this.jogo = new MultiColourMastermindGame(0, 4, multicolour);
 
 		ArrayList<MultiColour> trial = new ArrayList<MultiColour>();
 
@@ -48,44 +43,39 @@ class CodeTestIsRoundended {
 		trial.add(MultiColour.BLUE);
 		trial.add(MultiColour.BLUE);
 		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
+
 
 		Code tentativa = new Code(trial);
 		jogo.play(tentativa);
 
-		boolean expected = false;
-
-		boolean actual = jogo.isRoundFinished();
+		int expected = 0;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
 	}
-	
-	
 
 	@Test
 	void teste3() {
 
-		MultiColour[] binario = MultiColour.values();
+		MultiColour[] multicolour = MultiColour.values();
 
-		this.jogo = new MultiColourMastermindGame(0, 6, binario);
+		this.jogo = new MultiColourMastermindGame(0, 4, multicolour);
+
 
 		ArrayList<MultiColour> trial = new ArrayList<MultiColour>();
 
 		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.PINK);
-		trial.add(MultiColour.RED);
-		trial.add(MultiColour.ORANGE);
-		trial.add(MultiColour.ORANGE);
 		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);
+	
 
 		Code tentativa = new Code(trial);
 		jogo.play(tentativa);
 		jogo.play(tentativa);
 
-		boolean expected = false;
-
-		boolean actual = jogo.isRoundFinished();
+		int expected = 0;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
 	}
@@ -93,20 +83,21 @@ class CodeTestIsRoundended {
 	@Test
 	void teste4() {
 
-		MultiColour[] binario = MultiColour.values();
+		MultiColour[] multicolour = MultiColour.values();
 
-		this.jogo = new MultiColourMastermindGame(0, 6, binario);
+		this.jogo = new MultiColourMastermindGame(0, 4, multicolour);
+
 
 		ArrayList<MultiColour> trial = new ArrayList<MultiColour>();
 
-		trial.add(MultiColour.GREEN);
-		trial.add(MultiColour.GREEN);
-		trial.add(MultiColour.GREEN);
-		trial.add(MultiColour.GREEN);
-		trial.add(MultiColour.GREEN);
-		trial.add(MultiColour.GREEN);
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);
+
 
 		Code tentativa = new Code(trial);
+		jogo.play(tentativa);
 		jogo.play(tentativa);
 
 		trial.removeLast();
@@ -116,36 +107,35 @@ class CodeTestIsRoundended {
 
 		jogo.play(tentativa);
 
-		boolean expected = false;
+		jogo.play(tentativa);
 
-		boolean actual = jogo.isRoundFinished();
+		int expected = 0;
+		int actual = jogo.score();
 
-		assertEquals(expected, actual);;
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	void teste5() {
 
-		MultiColour[] binario = MultiColour.values();
+		MultiColour[] multicolour = MultiColour.values();
 
-		this.jogo = new MultiColourMastermindGame(0, 6, binario);
+		this.jogo = new MultiColourMastermindGame(0, 4, multicolour);
+
 
 		ArrayList<MultiColour> trial = new ArrayList<MultiColour>();
 
 		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.PINK);
-		trial.add(MultiColour.RED);
-		trial.add(MultiColour.ORANGE);
-		trial.add(MultiColour.ORANGE);
 		trial.add(MultiColour.BLUE);
-
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);
 
 		Code tentativa = new Code(trial);
 		jogo.play(tentativa);
 		jogo.play(tentativa);
 
 		trial.removeLast();
-		trial.add(MultiColour.RED);
+		trial.add(MultiColour.ORANGE);
 
 		tentativa = new Code(trial);
 
@@ -156,7 +146,42 @@ class CodeTestIsRoundended {
 		trial.add(MultiColour.PINK);
 		trial.add(MultiColour.RED);
 		trial.add(MultiColour.ORANGE);
-		trial.add(MultiColour.ORANGE);
+
+
+		tentativa = new Code(trial);
+
+		jogo.play(tentativa);
+
+		int expected = 50;
+		int actual = jogo.score();
+
+		assertEquals(expected, actual);
+	}
+	
+	
+	@Test
+	void teste6() {
+
+
+		MultiColour[] multicolour = MultiColour.values();
+
+		this.jogo = new MultiColourMastermindGame(0, 4, multicolour);
+
+
+		ArrayList<MultiColour> trial = new ArrayList<MultiColour>();
+
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);
+
+		Code tentativa = new Code(trial);
+		jogo.play(tentativa);
+
+		trial.clear();
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.PINK);
+		trial.add(MultiColour.RED);
 		trial.add(MultiColour.ORANGE);
 
 
@@ -164,39 +189,8 @@ class CodeTestIsRoundended {
 
 		jogo.play(tentativa);
 
-		boolean expected = true;
-
-		boolean actual = jogo.isRoundFinished();
-
-		assertEquals(expected, actual);
-	}
-	
-	@Test
-	void teste6() {
-
-		MultiColour[] binario = MultiColour.values();
-
-		this.jogo = new MultiColourMastermindGame(0, 6, binario);
-
-		ArrayList<MultiColour> trial = new ArrayList<MultiColour>();
-
-		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
-
-		Code tentativa = new Code(trial);
-		
-		for (int i = 1; i < MastermindGame.MAX_TRIALS; i++) {
-			jogo.play(tentativa);
-		}
-		
-
-		boolean expected = false;
-
-		boolean actual = jogo.isRoundFinished();
+		int expected = 100;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
 	}
@@ -204,9 +198,10 @@ class CodeTestIsRoundended {
 	@Test
 	void teste7() {
 
-		MultiColour[] binario = MultiColour.values();
+		MultiColour[] multicolour = MultiColour.values();
 
-		this.jogo = new MultiColourMastermindGame(0, 6, binario);
+		this.jogo = new MultiColourMastermindGame(0, 4, multicolour);
+
 
 		ArrayList<MultiColour> trial = new ArrayList<MultiColour>();
 
@@ -214,19 +209,31 @@ class CodeTestIsRoundended {
 		trial.add(MultiColour.BLUE);
 		trial.add(MultiColour.BLUE);
 		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
 
 		Code tentativa = new Code(trial);
-		
-		for (int i = 1; i <= MastermindGame.MAX_TRIALS; i++) {
-			jogo.play(tentativa);
-		}
+		jogo.play(tentativa);
 		
 
-		boolean expected = true;
+		trial.removeLast();
+		trial.add(MultiColour.ORANGE);
 
-		boolean actual = jogo.isRoundFinished();
+		tentativa = new Code(trial);
+
+		jogo.play(tentativa);
+
+		trial.clear();
+		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.PINK);
+		trial.add(MultiColour.RED);
+		trial.add(MultiColour.ORANGE);
+
+
+		tentativa = new Code(trial);
+
+		jogo.play(tentativa);
+
+		int expected = 50;
+		int actual = jogo.score();
 
 		assertEquals(expected, actual);
 	}

@@ -48,4 +48,16 @@ public enum MultiColour implements Colour {
     public Colour[] colours() {
         return MultiColour.values();
     }
+
+	
+	public static Colour fromChar(char c) {
+		String charGiven = "" + c;
+		for (Colour colour : MultiColour.values()) {
+			if (charGiven.equals(colour.toString())) 
+				return colour;
+			
+		}
+		return null;
+	}
+    
 }

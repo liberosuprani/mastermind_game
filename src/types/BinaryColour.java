@@ -43,4 +43,14 @@ public enum BinaryColour implements Colour {
 	public BinaryColour[] colours() {
 		return BinaryColour.values();
 	}
+	
+	public static Colour fromChar(char c) {
+		String charGiven = "" + c;
+		for (Colour colour : BinaryColour.values()) {
+			if (charGiven.equals(colour.toString())) 
+				return colour;
+			
+		}
+		return null;
+	}
 }

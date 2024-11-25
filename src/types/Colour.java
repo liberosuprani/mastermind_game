@@ -16,4 +16,6 @@ public interface Colour {
      * @return An array of Colour objects representing all possible colors.
      */
     Colour[] colours();
+    
+    
 }

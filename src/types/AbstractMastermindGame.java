@@ -15,7 +15,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
 	
 	private Colour[] colours;
 	
-	private Code code;
+	public Code code; // TODO mudar para private (tá public pq to testando no main)
 	private int codeSize;
 	
 	private Random random;
@@ -93,8 +93,8 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     }
     
     public Colour hint() {
-    	int colourHinted = random.nextInt(this.codeSize);
-    	return this.code.getCode().get(colourHinted);
+    	int position = random.nextInt(this.codeSize);
+    	return this.code.getCode().get(position);
     }
     
     public int getNumberOfTrials() {

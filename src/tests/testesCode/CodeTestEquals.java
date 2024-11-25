@@ -1,4 +1,4 @@
-package testesCode;
+package tests.testesCode;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +10,7 @@ import types.BinaryColour;
 import types.Code;
 import types.MultiColour;
 
-class CodeTestClone {
+class CodeTestEquals {
 
 	private Code codeToTest1;
 	private Code codeToTest2;
@@ -25,7 +25,7 @@ class CodeTestClone {
 		start.add(MultiColour.BLUE);
 		
 		codeToTest1 = new Code(start);
-		codeToTest2 = codeToTest1.clone();
+		codeToTest2 = new Code(start);
 
 		boolean expected = true;
 		boolean actual = codeToTest1.equals(codeToTest2);
@@ -43,92 +43,101 @@ class CodeTestClone {
 		start.add(MultiColour.BLUE);
 		start.add(MultiColour.GREEN);
 		start.add(MultiColour.BLUE);
-		start.add(MultiColour.BLUE);
 		
 		codeToTest1 = new Code(start);
-		codeToTest2 = codeToTest1.clone();
 
-		boolean expected = true;
+		boolean expected = false;
 		boolean actual = codeToTest1.equals(codeToTest2);
 
 		assertEquals(actual, expected);
-
 
 
 	}
-	
-	
+
 	@Test
 	void teste3() {
 
-		ArrayList<BinaryColour> start = new ArrayList<BinaryColour>();
+		ArrayList<MultiColour> start = new ArrayList<MultiColour>();
 
-		start.add(BinaryColour.BLACK);
-		start.add(BinaryColour.WHITE);
-		start.add(BinaryColour.BLACK);
-		start.add(BinaryColour.BLACK);
+		start.add(MultiColour.BLUE);
+		start.add(MultiColour.GREEN);
+		start.add(MultiColour.BLUE);
 		
 		codeToTest1 = new Code(start);
-		codeToTest2 = codeToTest1.clone();
-
-		boolean expected = true;
+		
+		start.removeLast();
+		start.add(MultiColour.ORANGE);
+		
+		codeToTest2 = new Code(start);
+		
+		boolean expected = false;
 		boolean actual = codeToTest1.equals(codeToTest2);
 
 		assertEquals(actual, expected);
-
-
-
 	}
 	
 	@Test
 	void teste4() {
 
-		ArrayList<BinaryColour> start = new ArrayList<BinaryColour>();
+		ArrayList<MultiColour> start = new ArrayList<MultiColour>();
 
-		start.add(BinaryColour.BLACK);
-		start.add(BinaryColour.WHITE);
-
+		start.add(MultiColour.BLUE);
+		start.add(MultiColour.GREEN);
+		start.add(MultiColour.BLUE);
 		
 		codeToTest1 = new Code(start);
-		codeToTest2 = codeToTest1.clone();
+		
+		start.add(MultiColour.BLUE);
+		
+		codeToTest2 = new Code(start);
 
-		boolean expected = true;
+		boolean expected = false;
 		boolean actual = codeToTest1.equals(codeToTest2);
 
 		assertEquals(actual, expected);
+
 
 	}
 	
 	@Test
 	void teste5() {
 
-		ArrayList<MultiColour> start = new ArrayList<MultiColour>();
+		ArrayList<BinaryColour> start = new ArrayList<BinaryColour>();
 
+		start.add(BinaryColour.BLACK);
+		start.add(BinaryColour.BLACK);
+		start.add(BinaryColour.WHITE);
 		
 		codeToTest1 = new Code(start);
-		codeToTest2 = codeToTest1.clone();
+		codeToTest2 = new Code(start);
 
 		boolean expected = true;
 		boolean actual = codeToTest1.equals(codeToTest2);
 
 		assertEquals(actual, expected);
-
-
-
 	}
 	
 	@Test
-	public void teste6() {
+	void teste6() {
+
+		ArrayList<BinaryColour> start = new ArrayList<BinaryColour>();
+
+		start.add(BinaryColour.BLACK);
+		start.add(BinaryColour.BLACK);
+		start.add(BinaryColour.WHITE);
 		
-		assertThrows(
-					NullPointerException.class,
-						() -> codeToTest1.clone(),
-						"Expected top() to throw, but it didn't"
-		);
+		codeToTest1 = new Code(start);
+		
+		start.add(BinaryColour.WHITE);
+		codeToTest2 = new Code(start);
+		
+
+		boolean expected = false;
+		boolean actual = codeToTest1.equals(codeToTest2);
+
+		assertEquals(actual, expected);
+
+
 	}
-	
-	
-
-
 
 }

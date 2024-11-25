@@ -1,4 +1,4 @@
-package TestesBullsAndCows;
+package tests.TestesBullsAndCows;
 
 import static org.junit.jupiter.api.Assertions.*;
 
