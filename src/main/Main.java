@@ -22,25 +22,25 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Random random = new Random();
         
-        int opcao = 0;
+        int option = 0;
         System.out.println("Welcome to the Mastermind game!\n\nTo play, please choose an option.\n");
 
-        while (opcao != 1 && opcao != 2 && opcao != 3) {
+        while (option != 1 && option != 2 && option != 3) {
 	        System.out.print("1-Original Mastermind\n2-Bulls and cows\n3-Exit\nOption: ");
-	        opcao = sc.nextInt();
+	        option = sc.nextInt();
 	        sc.nextLine();
 	        
-	        if (opcao != 1 && opcao != 2 && opcao != 3) {
+	        if (option != 1 && option != 2 && option != 3) {
 	        	System.out.printf("\n--------------------\nInvalid option!\n\n");
 	        }
         }
         
-        if (opcao != 3) {
+        if (option != 3) {
         	String userTrialInput;
         	AbstractMastermindGame game = null;
         	Colour[] colours = null;
 
-        	switch (opcao) {
+        	switch (option) {
 	        	case 1:
 	        		colours = MultiColour.values();
 	        		game = new MultiColourMastermindGame(random.nextInt(), codeSize, colours);
@@ -56,7 +56,7 @@ public class Main {
         	do {
 	        	while (!game.isRoundFinished()) {
 		        	System.out.println("\n--------------------");
-		        	System.out.println("Resposta: " + game.code.getCode());
+		        	System.out.println("Resposta: " + game.code.getCode()); //TODO remover isso aqui, só adicionei pra fazer debug
 		        	System.out.println(game.toString());
 		        	
 		        	System.out.print("Attempt (ABCD) or Hint(.): ");
@@ -75,7 +75,7 @@ public class Main {
 		        	else {
 			        	List<Colour> c = new ArrayList<Colour>();
 			        	for (int i = 0; i < codeSize; i++) {
-			        		if (opcao == 1) {
+			        		if (option == 1) {
 			        			//TODO tratar exceção de um char não existir nesses enums 
 			        			c.add(MultiColour.fromChar(Character.toUpperCase(userTrialInput.charAt(i))));
 			        		}
@@ -86,7 +86,7 @@ public class Main {
 			        	}
 			        	
 			        	Code userTrialCode = null;
-			        	if (opcao == 1) {
+			        	if (option == 1) {
 			        		userTrialCode = new Code(c);
 		        		}
 		    			else {
