@@ -15,7 +15,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
 	
 	private Colour[] colours;
 	
-	public Code code; // TODO mudar para private (tá public pq to testando no main)
+	private Code code; // TODO mudar para private (tá public pq to testando no main)
 	private int codeSize;
 	
 	private Random random;
@@ -60,22 +60,24 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     // IMPLEMENTATIONS
    
     public void play(Code trial) {	
-    	this.numberOfTrials++;
-    	
-    	if (!this.lastTrials.contains(trial)) {
-    		
-    		int i = 1;
-    		if (lastTrials.size() == 10) {
-	    		for (; i < this.lastTrials.size(); i++) 
-    				this.lastTrials.set(i-1, this.lastTrials.get(i));
-	    		this.lastTrials.set(i-1, trial);
-    		}
-    		else
-    			lastTrials.add(trial);
-    		
-    		
-    		if (isRoundFinished())
-    			updateScore();   		
+    	if (trial.getCode().size() == this.codeSize) {
+	    	this.numberOfTrials++;
+	    	
+	    	if (!this.lastTrials.contains(trial)) {
+	    		
+	    		int i = 1;
+	    		if (lastTrials.size() == 10) {
+		    		for (; i < this.lastTrials.size(); i++) 
+	    				this.lastTrials.set(i-1, this.lastTrials.get(i));
+		    		this.lastTrials.set(i-1, trial);
+	    		}
+	    		else
+	    			lastTrials.add(trial);
+	    		
+	    		
+	    		if (isRoundFinished())
+	    			updateScore();   		
+	    	}
     	}
     }
     
