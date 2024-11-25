@@ -40,7 +40,7 @@ public class Code implements Cloneable {
 			Colour currentColour = userTry.get(i);
 			
 			if (clonedSecret.contains(currentColour)) {
-				int firstAppearance = clonedSecret.indexOf(currentColour);
+				int firstAppearance = secret.indexOf(currentColour);
 				
 				if (userTry.get(i) == secret.get(i)) {
 					correctPosition++;

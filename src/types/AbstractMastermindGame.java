@@ -39,10 +39,9 @@ public abstract class AbstractMastermindGame implements MastermindGame {
 			generatedCode.add(colours[random.nextInt(colours.length)]);
 			hidden.append("?, ");
 		}
-		this.code = new Code(generatedCode);
+		this.code = new Code(generatedCode); 
 		
 		hidden.delete(hidden.length()-2, hidden.length()).append(']');
-		
 		
 		this.boardString = new StringBuilder(
 			"Number of Trials = " + this.numberOfTrials + "\n" +
@@ -67,9 +66,9 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     		
     		int i = 1;
     		if (lastTrials.size() == 10) {
-	    		for (; i < this.lastTrials.size()-1; i++) 
+	    		for (; i < this.lastTrials.size(); i++) 
     				this.lastTrials.set(i-1, this.lastTrials.get(i));
-	    		this.lastTrials.set(i, trial);
+	    		this.lastTrials.set(i-1, trial);
     		}
     		else
     			lastTrials.add(trial);
