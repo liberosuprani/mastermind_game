@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import types.MultiColour;
 import types.MultiColourMastermindGame;
 import types.Code;
-import types.MastermingGame;
+import types.MastermindGame;
+
 
 class CodeTestIsRoundended {
 
@@ -188,7 +189,7 @@ class CodeTestIsRoundended {
 
 		Code tentativa = new Code(trial);
 		
-		for (int i = 1; i < MastermingGame.MAX_TRIALS; i++) {
+		for (int i = 1; i < MastermindGame.MAX_TRIALS; i++) {
 			jogo.play(tentativa);
 		}
 		
@@ -218,7 +219,7 @@ class CodeTestIsRoundended {
 
 		Code tentativa = new Code(trial);
 		
-		for (int i = 1; i <= MastermingGame.MAX_TRIALS; i++) {
+		for (int i = 1; i <= MastermindGame.MAX_TRIALS; i++) {
 			jogo.play(tentativa);
 		}
 		

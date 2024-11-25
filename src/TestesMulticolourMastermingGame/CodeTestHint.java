@@ -28,8 +28,6 @@ class CodeTestHint {
 		Colour actual = jogo.hint();
 
 		assertEquals(expected, actual);
-
-
 	}
 	
 	
@@ -61,8 +59,6 @@ class CodeTestHint {
 		int actual = jogo.score();
 
 		assertEquals(expected, actual);
-
-
 	}
 	
 	@Test

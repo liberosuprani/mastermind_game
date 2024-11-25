@@ -18,20 +18,17 @@ class CodeTestBestTrial {
 
 	@Test
 	void teste1() {
-
+		
 		MultiColour[] multicolour = MultiColour.values();
-
+		
 		this.jogo = new MultiColourMastermindGame(0, 6, multicolour);
-
+		
 		Code expected = null;
-
+		
 		Code actual = jogo.bestTrial();
-
+		
 		assertEquals(expected, actual);
-
-
 	}
-
 
 	@Test
 	void teste2() {

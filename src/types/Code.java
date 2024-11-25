@@ -12,9 +12,12 @@ public class Code implements Cloneable {
 	private List<? extends Colour> code;
 
 	public Code(List<? extends Colour> code) {
-		this.code = code;
+		this.code = new ArrayList<Colour>();
+		
+		for (int i = 0; i < code.size(); i++)
+			((List<Colour>)this.code).add(code.get(i));
 	}
-
+	
 	public List<Colour> getCode() {
 		return (List<Colour>)this.code;
 	}
@@ -24,7 +27,7 @@ public class Code implements Cloneable {
 	}
 
 	public int[] howManyCorrect(Code other) {
-		int correctPosition = 0, wrongPosition = 0;
+		int correctPosition = 0;
 		
 		List<Colour> userTry = other.getCode();
 		
@@ -60,9 +63,12 @@ public class Code implements Cloneable {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("[");
 		for (Colour colour : this.code)
-			sb.append(colour);
+			sb.append(colour + ", ");
 		
+		sb.delete(sb.length()-2, sb.length());
+		sb.append("]");
 		return sb.toString();
 	}
 

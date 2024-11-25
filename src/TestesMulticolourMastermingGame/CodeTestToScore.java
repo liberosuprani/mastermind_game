@@ -27,8 +27,6 @@ class CodeTestToScore {
 		int actual = jogo.score();
 
 		assertEquals(expected, actual);
-
-
 	}
 
 
@@ -38,7 +36,6 @@ class CodeTestToScore {
 		MultiColour[] multicolour = MultiColour.values();
 
 		this.jogo = new MultiColourMastermindGame(0, 4, multicolour);
-
 
 		ArrayList<MultiColour> trial = new ArrayList<MultiColour>();
 

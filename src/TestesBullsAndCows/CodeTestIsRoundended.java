@@ -1,16 +1,16 @@
 package TestesBullsAndCows;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
 
 import types.BinaryColour;
 import types.BullsAndCows;
 import types.Code;
+import types.MastermindGame;
 
-class CodeTestToSTring {
+
+class CodeTestIsRoundended {
 
 	public static String EOL = System.lineSeparator();
 
@@ -23,11 +23,9 @@ class CodeTestToSTring {
 
 		this.jogo = new BullsAndCows(0, 6, binario);
 
-		String expected = "Number of Trials = 0" + EOL
-				+ "Score = 0" + EOL
-				+ "[?, ?, ?, ?, ?, ?]" + EOL
-				+ EOL;
-		String actual = jogo.toString();
+		boolean expected = false;
+
+		boolean actual = jogo.isRoundFinished();
 
 		assertEquals(expected, actual);
 
@@ -54,15 +52,14 @@ class CodeTestToSTring {
 		Code tentativa = new Code(trial);
 		jogo.play(tentativa);
 
-		String expected = "Number of Trials = 1" + EOL
-				+ "Score = 0" + EOL
-				+ "[?, ?, ?, ?, ?, ?]" + EOL
-				+ "\n"
-				+ "[B, B, B, B, B, B]    2 0" + EOL;
-		String actual = jogo.toString();
+		boolean expected = false;
+
+		boolean actual = jogo.isRoundFinished();
 
 		assertEquals(expected, actual);
 	}
+	
+	
 
 	@Test
 	void teste3() {
@@ -84,12 +81,9 @@ class CodeTestToSTring {
 		jogo.play(tentativa);
 		jogo.play(tentativa);
 
-		String expected = "Number of Trials = 2" + EOL
-				+ "Score = 0" + EOL
-				+ "[?, ?, ?, ?, ?, ?]" + EOL
-				+ "\n"
-				+ "[B, B, B, B, B, B]    2 0" + EOL;
-		String actual = jogo.toString();
+		boolean expected = false;
+
+		boolean actual = jogo.isRoundFinished();
 
 		assertEquals(expected, actual);
 	}
@@ -121,15 +115,11 @@ class CodeTestToSTring {
 
 		jogo.play(tentativa);
 
-		String expected = "Number of Trials = 3" + EOL
-				+ "Score = 0" + EOL
-				+ "[?, ?, ?, ?, ?, ?]" + EOL
-				+ "\n"
-				+ "[B, B, B, B, B, B]    2 0" + EOL
-				+ "[B, B, B, B, B, W]    1 2" + EOL;
-		String actual = jogo.toString();
+		boolean expected = false;
 
-		assertEquals(expected, actual);
+		boolean actual = jogo.isRoundFinished();
+
+		assertEquals(expected, actual);;
 	}
 
 	@Test
@@ -171,14 +161,69 @@ class CodeTestToSTring {
 
 		jogo.play(tentativa);
 
-		String expected = "Number of Trials = 4" + EOL
-				+ "Score = 2000" + EOL
-				+ "[W, W, B, W, W, B]" + EOL
-				+ "\n"
-				+ "[B, B, B, B, B, B]    2 0" + EOL
-				+ "[B, B, B, B, B, W]    1 2" + EOL
-				+ "[W, W, B, W, W, B]    6 0" + EOL;
-		String actual = jogo.toString();
+		boolean expected = true;
+
+		boolean actual = jogo.isRoundFinished();
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void teste6() {
+
+		BinaryColour[] binario = BinaryColour.values();
+
+		this.jogo = new BullsAndCows(0, 6, binario);
+
+		ArrayList<BinaryColour> trial = new ArrayList<BinaryColour>();
+
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+
+		Code tentativa = new Code(trial);
+		
+		for (int i = 1; i < MastermindGame.MAX_TRIALS; i++) {
+			jogo.play(tentativa);
+		}
+		
+
+		boolean expected = false;
+
+		boolean actual = jogo.isRoundFinished();
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void teste7() {
+
+		BinaryColour[] binario = BinaryColour.values();
+
+		this.jogo = new BullsAndCows(0, 6, binario);
+
+		ArrayList<BinaryColour> trial = new ArrayList<BinaryColour>();
+
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+		trial.add(BinaryColour.BLACK);
+
+		Code tentativa = new Code(trial);
+		
+		for (int i = 0; i <= MastermindGame.MAX_TRIALS; i++) {
+			jogo.play(tentativa);
+		}
+		
+
+		boolean expected = true;
+
+		boolean actual = jogo.isRoundFinished();
 
 		assertEquals(expected, actual);
 	}

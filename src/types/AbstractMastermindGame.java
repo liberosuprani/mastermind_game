@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class AbstractMastermindGame implements MastermindGame {
-    
-	private int seed;
+  
 	
-	private int score;
+	protected int score;
 	
 	private int numberOfTrials;
 	private List<Code> lastTrials;
@@ -21,9 +20,11 @@ public abstract class AbstractMastermindGame implements MastermindGame {
 	
 	private Random random;
 	
+	private StringBuilder boardString;
+	
 	public AbstractMastermindGame(int seed, int size, Colour[] colours) {
+		
 		this.score = 0;
-		this.seed = seed;
 		this.colours = colours;
 		this.codeSize = size;
 		this.lastTrials = new ArrayList<Code>(10);
@@ -31,11 +32,23 @@ public abstract class AbstractMastermindGame implements MastermindGame {
 		this.bestTrial = null;
 		this.random = new Random(seed);
 	
+		StringBuilder hidden = new StringBuilder("[");
+		
 		List<Colour> generatedCode = new ArrayList<Colour>();
-		for (int i = 0; i < size; i++) 
+		for (int i = 0; i < size; i++) {
 			generatedCode.add(colours[random.nextInt(colours.length)]);
-			
+			hidden.append("?, ");
+		}
 		this.code = new Code(generatedCode);
+		
+		hidden.delete(hidden.length()-2, hidden.length()).append(']');
+		
+		
+		this.boardString = new StringBuilder(
+			"Number of Trials = " + this.numberOfTrials + "\n" +
+			"Score = " + this.score + "\n" +
+			hidden.toString() + "\n" + "\n"
+		);
 	}
 
     public abstract int score();
@@ -48,15 +61,19 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     // IMPLEMENTATIONS
    
     public void play(Code trial) {	
+    	this.numberOfTrials++;
     	
     	if (!this.lastTrials.contains(trial)) {
     		
     		int i = 1;
-    		for (; i < this.lastTrials.size()-1; i++) 
-    			this.lastTrials.set(i-1, this.lastTrials.get(i));
-    		this.lastTrials.set(i, trial);
-
-    		this.numberOfTrials++;
+    		if (lastTrials.size() == 10) {
+	    		for (; i < this.lastTrials.size()-1; i++) 
+    				this.lastTrials.set(i-1, this.lastTrials.get(i));
+	    		this.lastTrials.set(i, trial);
+    		}
+    		else
+    			lastTrials.add(trial);
+    		
     		
     		if (isRoundFinished())
     			updateScore();   		
@@ -76,8 +93,8 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     }
     
     public Colour hint() {
-    	//TODO
-    	return null;
+    	int colourHinted = random.nextInt(this.codeSize);
+    	return this.code.getCode().get(colourHinted);
     }
     
     public int getNumberOfTrials() {
@@ -86,9 +103,10 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     
     public Code bestTrial() {
     	if (this.numberOfTrials == 0) {
-    		this.bestTrial = this.lastTrials.get(0);
+    		return null;
     	}
     		
+    	this.bestTrial = this.lastTrials.get(0);
     	int bestCorrectPositions = this.code.howManyCorrect(bestTrial)[0];
     	int bestWrongPositions = this.code.howManyCorrect(bestTrial)[1];
     	int bestTrialIndex = 0;
@@ -120,19 +138,55 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     }
     
     public boolean wasSecretRevealed() {
-    	Code lastTrial = this.lastTrials.getLast();
-    	int correctPositions = this.code.howManyCorrect(lastTrial)[0];
-    	
-       	if (correctPositions == this.codeSize) 
-    		return true;
-    	
+    	if (!this.lastTrials.isEmpty()) {
+	    	Code lastTrial = this.lastTrials.getLast();
+	    	int correctPositions = this.code.howManyCorrect(lastTrial)[0];
+	    	
+	       	if (correctPositions == this.codeSize) 
+	    		return true;
+    	}
     	return false;
     }
     
     @Override
     public String toString() {
-    	//TODO
-    	return null;
+    	StringBuilder trialsString = new StringBuilder();
+		
+    	this.boardString.delete(0, this.boardString.length());
+    	StringBuilder hidden = new StringBuilder("[");    	
+		for (int i = 0; i < this.codeSize; i++) {
+			hidden.append("?, ");
+		}
+		hidden.delete(hidden.length()-2, hidden.length()).append(']');
+		this.boardString.append(
+    			"Number of Trials = " + this.numberOfTrials + "\n" +
+				"Score = " + this.score + "\n" +
+				hidden.toString() + "\n" + "\n"   			
+		);
+		
+    	int correctPositions = 0, wrongPositions = 0;
+    	
+    	for (Code trial : this.lastTrials) {
+    		correctPositions = this.code.howManyCorrect(trial)[0];
+    		wrongPositions = this.code.howManyCorrect(trial)[1];
+    		
+    		trialsString.append(trial.toString() + "    " + correctPositions + " " + wrongPositions + "\n");
+    	}
+  
+    	if (this.wasSecretRevealed()) {
+    		int i = 0;
+    		while (this.boardString.toString().contains("?")) {
+     			this.boardString.setCharAt(
+    				this.boardString.indexOf("?"),
+    				this.code.getCode().get(i).toString().charAt(0)
+				);
+     			i++;
+    		}
+    	}
+    	
+    	this.boardString.append(trialsString);
+				
+    	return this.boardString.toString();
     }
     
 }
