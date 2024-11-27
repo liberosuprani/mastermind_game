@@ -5,98 +5,58 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//All documentation is needed.
-
 public class Code implements Cloneable {
 
-	private List<? extends Colour> code;
+    // lista que armazena a sequência de cores deste código.
+    private List<? extends Colour> code;
 
-	public Code(List<? extends Colour> code) {
-		this.code = new ArrayList<Colour>();
-		
-		for (int i = 0; i < code.size(); i++)
-			((List<Colour>)this.code).add(code.get(i));
-	}
-	
-	public List<Colour> getCode() {
-		return (List<Colour>)this.code;
-	}
+    /**
+     * Construtor da classe `Code`.
+     * 
+     * @param code Uma lista de cores que compõe o código. A lista é copiada para garantir imutabilidade.
+     */
+    public Code(List<? extends Colour> code) {
+        // Inicializa uma nova lista para armazenar as cores
+        this.code = new ArrayList<Colour>();
 
-	public int getLength() {
-		return this.code.size();
-	}
+        // Copia os elementos da lista fornecida para a lista interna
+        for (int i = 0; i < code.size(); i++)
+            ((List<Colour>) this.code).add(code.get(i));
+    }
 
-	public int[] howManyCorrect(Code other) {
-		int correctPosition = 0;
-		
-		List<Colour> userTry = other.getCode();
-		
-		List<? extends Colour> secret = this.code;
-		List<Colour> clonedSecret = this.clone().getCode();
-		
-		Map<Integer, Colour> wrongPositionMap = new HashMap<Integer, Colour>();
-		
-		for (int i = 0; i < other.getLength(); i++) {
-			Colour currentColour = userTry.get(i);
-			
-			if (clonedSecret.contains(currentColour)) {
-				int firstAppearance = secret.indexOf(currentColour);
-				
-				if (userTry.get(i) == secret.get(i)) {
-					correctPosition++;
-					clonedSecret.remove(currentColour);
-					
-					if (wrongPositionMap.containsKey(firstAppearance))
-						wrongPositionMap.remove(firstAppearance);
-				}
-				else if (!wrongPositionMap.containsKey(firstAppearance))
-					wrongPositionMap.put(firstAppearance, currentColour);
-			}
-		}
-		
-		
-		
-		int[] result = {correctPosition, wrongPositionMap.size()};
-		return result;
-	}
+    /**
+     * Retorna a lista de cores que compõe o código.
+     * 
+     * @return Uma lista de objetos do tipo `Colour`.
+     */
+    public List<Colour> getCode() {
+        return (List<Colour>) this.code;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[");
-		for (Colour colour : this.code)
-			sb.append(colour + ", ");
-		
-		sb.delete(sb.length()-2, sb.length());
-		sb.append("]");
-		return sb.toString();
-	}
+    /**
+     * Retorna o tamanho do código, ou seja, a quantidade de cores presentes.
+     * 
+     * @return Um inteiro representando o comprimento do código.
+     */
+    public int getLength() {
+        return this.code.size();
+    }
 
-	@Override
-	public Code clone() {
-		List<Colour> clonedCode = new ArrayList<Colour>();
-		for (Colour colour : this.code) 
-			clonedCode.add(colour);
-		
-		return new Code(clonedCode);
-	}
+    /**
+     * Compara o código atual com outro código fornecido e determina:
+     * 1. Quantos elementos estão na posição correta.
+     * 2. Quantos elementos estão presentes no código, mas em posições erradas.
+     * 
+     * @param other Um objeto do tipo `Code` que será comparado com o código atual.
+     * @return Um array de inteiros onde:
+     *         - O índice 0 contém o número de cores na posição correta.
+     *         - O índice 1 contém o número de cores presentes, mas em posições erradas.
+     */
+    public int[] howManyCorrect(Code other) {
+        int correctPosition = 0; // Contador para elementos na posição correta
 
-	@Override
-	public boolean equals(Object obj) {
-		if ( !(obj instanceof Code) ) 
-			return false;
-		else {
-			Code castObj = (Code) obj;
-			List<Colour> objCode = castObj.getCode(); 
-	
-			if (this.code.size() != objCode.size())
-				return false;
-	
-			for (int i = 0; i < objCode.size(); i++) {
-				if (objCode.get(i) != this.code.get(i))
-					return false;
-			}	
-		}
-		return true;
-	}
-}
+        // Obtém a lista de cores do código fornecido pelo usuário
+        List<Colour> userTry = other.getCode();
+
+        // Clona a lista de cores do código atual para manipulação
+        List<? extends Colour>
