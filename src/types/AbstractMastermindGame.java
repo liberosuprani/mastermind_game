@@ -6,7 +6,6 @@ import java.util.Random;
 
 public abstract class AbstractMastermindGame implements MastermindGame {
   
-	
 	protected int score;
 	
 	private int numberOfTrials;
@@ -15,7 +14,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
 	
 	private Colour[] colours;
 	
-	private Code code; // TODO mudar para private (tá public pq to testando no main)
+	public Code code; // TODO mudar para private (tá public pq to testando no main)
 	private int codeSize;
 	
 	private Random random;
@@ -39,6 +38,8 @@ public abstract class AbstractMastermindGame implements MastermindGame {
 			generatedCode.add(colours[random.nextInt(colours.length)]);
 			hidden.append("?, ");
 		}
+
+		
 		this.code = new Code(generatedCode); 
 		
 		hidden.delete(hidden.length()-2, hidden.length()).append(']');
@@ -60,6 +61,9 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     // IMPLEMENTATIONS
    
     public void play(Code trial) {	
+		// if (trial instanceof BullsAndCowsCode)
+		// 	trial = (BullsAndCowsCode) trial;
+
     	if (trial.getCode().size() == this.codeSize) {
 	    	this.numberOfTrials++;
 	    	

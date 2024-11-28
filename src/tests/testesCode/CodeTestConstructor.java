@@ -1,10 +1,9 @@
 package tests.testesCode;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Test;
 
 import types.BinaryColour;
 import types.Code;

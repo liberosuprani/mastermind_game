@@ -5,13 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import types.AbstractMastermindGame;
-import types.BinaryColour;
-import types.BullsAndCows;
-import types.Code;
-import types.Colour;
-import types.MultiColour;
-import types.MultiColourMastermindGame;
+import types.*;
 
 public class Main {
 	
@@ -106,7 +100,7 @@ public class Main {
             do {
                 while (!game.isRoundFinished()) {
                     System.out.println("\n--------------------");
-//                    System.out.println("Resposta: " + game.code.getCode()); // TODO: Remover essa linha após depuração.
+                    System.out.println("Resposta: " + game.code.getCode()); // TODO: Remover essa linha após depuração.
                     System.out.println(game.toString());
 		        	
                     System.out.print("Attempt " + validLetters(option) + " or Hint(.): ");
@@ -155,7 +149,12 @@ public class Main {
                         if (option == OG_MASTERMIND_OPTION) 
                             userTrialCode = new Code(trialColoursList);
 			        	else {
-                            // TODO: Implementar a classe BullsAndCowsCode.
+                            List<BinaryColour> trialBinaryColoursList = new ArrayList<BinaryColour>();
+
+                            for (Colour c : trialColoursList) 
+                                trialBinaryColoursList.add((BinaryColour) c);
+                            
+                            userTrialCode = new BullsAndCowsCode(trialBinaryColoursList);
                         }
                         game.play(userTrialCode);
 		            }	

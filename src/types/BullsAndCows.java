@@ -1,10 +1,12 @@
 package types;
 
-public class BullsAndCows extends AbstractMastermindGame{
-	
+public class BullsAndCows extends AbstractMastermindGame {
+
+
 	public BullsAndCows(int seed, int size, Colour[] colours) {
 		super(seed, size, colours);
 		this.score = 0;
+		this.code = new BullsAndCowsCode(this.code.getCode());
 	}
 
 	@Override

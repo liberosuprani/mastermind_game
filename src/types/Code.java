@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Code implements Cloneable {
 
-	private List<? extends Colour> code;
+	protected List<? extends Colour> code;
 
 	public Code(List<? extends Colour> code) {
 		this.code = new ArrayList<Colour>();
@@ -27,36 +27,57 @@ public class Code implements Cloneable {
 	}
 
 	public int[] howManyCorrect(Code other) {
-		int correctPosition = 0;
 		
 		List<Colour> userTry = other.getCode();
 		
 		List<? extends Colour> secret = this.code;
-		List<Colour> clonedSecret = this.clone().getCode();
 		
 		Map<Integer, Colour> wrongPositionMap = new HashMap<Integer, Colour>();
+		Map<Integer, Colour> rightPositionMap = new HashMap<Integer, Colour>();
 		
 		for (int i = 0; i < other.getLength(); i++) {
 			Colour currentColour = userTry.get(i);
-			
-			if (clonedSecret.contains(currentColour)) {
-				int firstAppearance = secret.indexOf(currentColour);
+
+			// if (clonedSecret.contains(currentColour)) {
+			// 	int firstAppearance = secret.indexOf(currentColour);
 				
-				if (userTry.get(i) == secret.get(i)) {
-					correctPosition++;
-					clonedSecret.remove(currentColour);
+			// 	if (userTry.get(i) == secret.get(i)) {
+			// 		correctPosition++;
+			// 		clonedSecret.remove(currentColour);
 					
-					if (wrongPositionMap.containsKey(firstAppearance))
-						wrongPositionMap.remove(firstAppearance);
+			// 		if (wrongPositionMap.containsKey(firstAppearance))
+			// 			wrongPositionMap.remove(firstAppearance);
+			// 	}
+			// 	else if (!wrongPositionMap.containsValue(currentColour))
+			// 		wrongPositionMap.put(firstAppearance, currentColour);
+			// }
+		
+		
+			if (secret.contains(currentColour)) {
+					
+				if (currentColour == secret.get(i)) {
+					rightPositionMap.put(i, currentColour);
+					
+					if (wrongPositionMap.containsKey(i))
+						wrongPositionMap.remove(i);
+				} 
+
+				else if (!wrongPositionMap.containsValue(currentColour)) {
+					
+					boolean foundWrongIndex = false;
+
+					int j = 0;
+					while(!foundWrongIndex && j < secret.size()) {
+						if (!rightPositionMap.containsKey(j) && secret.get(j).equals(currentColour)) {
+							foundWrongIndex = true;
+							wrongPositionMap.put(j, currentColour);
+						}
+						j++;
+					}
 				}
-				else if (!wrongPositionMap.containsKey(firstAppearance))
-					wrongPositionMap.put(firstAppearance, currentColour);
 			}
 		}
-		
-		
-		
-		int[] result = {correctPosition, wrongPositionMap.size()};
+		int[] result = {rightPositionMap.size(), wrongPositionMap.size()};
 		return result;
 	}
 
