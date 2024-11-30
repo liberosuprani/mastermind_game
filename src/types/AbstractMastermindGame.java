@@ -17,16 +17,16 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     private int numberOfTrials;
     
     // lista com as últimas tentativas realizadas
-    private List<Code> lastTrials;
+    private List<Code<Colour>> lastTrials;
     
     // melhor tentativa registada até o momento
-    private Code bestTrial;
+    private Code<Colour> bestTrial;
     
     // array de cores possíveis no código secreto
     private Colour[] colours;
     
     // o código secreto 
-    protected Code code; 
+    protected Code<Colour> code; 
     
     // tamanho do código secreto (número de posições)
     private int codeSize;
@@ -48,7 +48,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
         this.score = 0;
         this.colours = colours;
         this.codeSize = size;
-        this.lastTrials = new ArrayList<Code>(10);
+        this.lastTrials = new ArrayList<Code<Colour>>(10);
         this.numberOfTrials = 0;
         this.bestTrial = null;
         this.random = new Random(seed);
@@ -61,7 +61,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
             hidden.append("?, ");
         }
 
-        this.code = new Code(generatedCode);
+        this.code = new Code<Colour>(generatedCode);
         hidden.delete(hidden.length() - 2, hidden.length()).append(']');
         
         // configuração inicial do tabuleiro
@@ -82,7 +82,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
      * 
      * @param trial tentativa feita pelo jogador.
      */
-    public void play(Code trial) {
+    public void play(Code<Colour> trial) {
         if (trial.getCode().size() == this.codeSize) {
             this.numberOfTrials++;
             
@@ -117,7 +117,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
         for (int i = 0; i < this.codeSize; i++) 
             generatedCode.add(this.colours[this.random.nextInt(this.colours.length)]);
             
-        this.code = new Code(generatedCode);
+        this.code = new Code<Colour>(generatedCode);
     }
     
     /**
@@ -127,7 +127,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
      */
     public Colour hint() {
         int position = random.nextInt(this.codeSize);
-        return this.code.getCode().get(position);
+        return (Colour) this.code.getCode().get(position);
     }
     
     /**
@@ -142,7 +142,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
      * 
      * @return A melhor tentativa ou null se nenhuma tentativa foi realizada.
      */
-    public Code bestTrial() {
+    public Code<Colour> bestTrial() {
         if (this.numberOfTrials == 0) {
             return null;
         }
@@ -152,7 +152,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
         int bestWrongPositions = this.code.howManyCorrect(bestTrial)[1];
         int bestTrialIndex = 0;
         
-        for (Code trial : this.lastTrials) {
+        for (Code<Colour> trial : this.lastTrials) {
             int currentBestCorrectPositions = this.code.howManyCorrect(trial)[0];
             int currentBestWrongPositions = this.code.howManyCorrect(trial)[1];
             
@@ -181,7 +181,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
      */
     public boolean wasSecretRevealed() {
         if (!this.lastTrials.isEmpty()) {
-            Code lastTrial = this.lastTrials.get(this.lastTrials.size() - 1);
+        	Code<Colour> lastTrial = this.lastTrials.get(this.lastTrials.size() - 1);
             int correctPositions = this.code.howManyCorrect(lastTrial)[0];
             
             if (correctPositions == this.codeSize) 
@@ -211,7 +211,7 @@ public abstract class AbstractMastermindGame implements MastermindGame {
         
         int correctPositions = 0, wrongPositions = 0;
         
-        for (Code trial : this.lastTrials) {
+        for (Code<Colour> trial : this.lastTrials) {
             correctPositions = this.code.howManyCorrect(trial)[0];
             wrongPositions = this.code.howManyCorrect(trial)[1];
             

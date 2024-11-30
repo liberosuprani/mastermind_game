@@ -64,7 +64,7 @@ public class Main {
         Random random = new Random();
 
         int option = 0;
-
+        
         System.out.println("Welcome to the Mastermind game!\n\nTo play, please choose an option.\n");
 
         // valida a entrada do jogador até que uma opção válida seja selecionada
@@ -148,9 +148,9 @@ public class Main {
                         }
 			        	
                         // cria um objeto Code com base na tentativa do jogador
-                        Code userTrialCode = null;
+                        Code<Colour> userTrialCode = null;
                         if (option == OG_MASTERMIND_OPTION) 
-                            userTrialCode = new Code(trialColoursList);
+                            userTrialCode = new Code<Colour>(trialColoursList);
 			        	else {
                             List<BinaryColour> trialBinaryColoursList = new ArrayList<BinaryColour>();
 

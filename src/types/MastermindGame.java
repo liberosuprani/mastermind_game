@@ -21,7 +21,7 @@ public interface MastermindGame {
      * 
      * @param trial O código (tentativa) que o jogador está a tentar adivinhar.
      */
-	public void play(Code trial);
+	public void play(Code<Colour> trial);
 	
     /**
      * Verifica se a rodada atual foi finalizada.
@@ -57,7 +57,7 @@ public interface MastermindGame {
      * 
      * @return O código da melhor tentativa.
      */
-	public Code bestTrial();
+	public Code<Colour> bestTrial();
 	
     /**
      * @return A pontuação atual do jogo.

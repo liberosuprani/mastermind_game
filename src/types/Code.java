@@ -2,6 +2,7 @@ package types;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ import java.util.Map;
  * 
  * @author PCO Team
  */
-public class Code implements Cloneable {
+public class Code<Colour> implements Cloneable, Iterable<Colour> {
 
     // lista que contém as cores do código.
 	protected List<? extends Colour> code;
@@ -54,10 +55,7 @@ public class Code implements Cloneable {
      * @param other O código a ser comparado com o código atual.
      * @return Um array contendo o número de cores na posição certa e cores certas na posição errada.
      */
-	public int[] howManyCorrect(Code other) {
-		
-		// tentativa do usuário
-		List<Colour> userTry = other.getCode();
+	public int[] howManyCorrect(Code<Colour> other) {
 		
 		// código secreto
 		List<? extends Colour> secret = this.code;
@@ -67,9 +65,9 @@ public class Code implements Cloneable {
 		Map<Integer, Colour> rightPositionMap = new HashMap<Integer, Colour>();
 		
 		// itera sobre cada posição do código de tentativa
-		for (int i = 0; i < other.getLength(); i++) {
-			Colour currentColour = userTry.get(i);
-		
+		int i = 0;
+		for (Colour currentColour : other) {
+			
 			// verifica se a cor da tentativa está no código secreto
 			if (secret.contains(currentColour)) {
 					
@@ -98,6 +96,7 @@ public class Code implements Cloneable {
 					}
 				}
 			}
+			i++;
 		}
 		
 		// retorna o número de cores na posição certa e cores certas na posição errada
@@ -131,7 +130,7 @@ public class Code implements Cloneable {
      * @return Uma cópia do código atual.
      */
 	@Override
-	public Code clone() {
+	public Code<Colour> clone() {
 		
 		try {
 			System.out.println(this.getClass());
@@ -140,7 +139,7 @@ public class Code implements Cloneable {
 			for (Colour colour : this.code) 
 				clonedCode.add(colour);
 			
-			Code cloned = (Code) super.clone();
+			Code<Colour> cloned = (Code<Colour>) super.clone();
 			cloned.code = clonedCode;
 			
 			return cloned;
@@ -163,7 +162,7 @@ public class Code implements Cloneable {
 		if (!(obj instanceof Code)) 
 			return false;
 		else {
-			Code castObj = (Code) obj;
+			Code<Colour> castObj = (Code<Colour>) obj;
 			List<Colour> objCode = castObj.getCode(); 
 	
 			// verifica se o código tem o mesmo tamanho
@@ -178,5 +177,30 @@ public class Code implements Cloneable {
 			}	
 		}
 		return true;
+	}
+
+	@Override
+	public Iterator<Colour> iterator() {
+		return new CodeIterator();
+	}
+	
+	private class CodeIterator implements Iterator<Colour>{
+
+		private int currentIndex;
+		
+		private CodeIterator() {
+			this.currentIndex = 0;
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return this.currentIndex < getLength();
+		}
+
+		@Override
+		public Colour next() {
+			return code.get(currentIndex++);
+		}
+		
 	}
 }

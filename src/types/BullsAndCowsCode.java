@@ -12,7 +12,7 @@ import java.util.Map;
  * 
  * @author PCO Team
  */
-public class BullsAndCowsCode extends Code {
+public class BullsAndCowsCode extends Code<Colour> {
 	
     /**
      * Construtor da classe BullsAndCowsCode.
@@ -32,10 +32,7 @@ public class BullsAndCowsCode extends Code {
      * @return Um array contendo o número de "Bulls" e "Cows", respetivamente.
      */
 	@Override
-	public int[] howManyCorrect(Code other) {
-		
-		// a tentativa do jogador
-		List<Colour> userTry = other.getCode();
+	public int[] howManyCorrect(Code<Colour> other) {
 		
 		// o código secreto
 		List<? extends Colour> secret = this.code;
@@ -45,9 +42,9 @@ public class BullsAndCowsCode extends Code {
 		Map<Integer, Colour> wrongPositionMap = new HashMap<Integer, Colour>();
 		
 		// itera sobre cada posição do código de tentativa
-		for (int i = 0; i < other.getLength(); i++) {
-			Colour currentColour = userTry.get(i);
-
+		int i = 0;
+		for (Colour currentColour : other) {
+			
 			// verifica se a cor da tentativa está no código secreto
 			if (secret.contains(currentColour)) {
 				
@@ -76,6 +73,7 @@ public class BullsAndCowsCode extends Code {
 					}
 				}
 			}
+			i++;
 		}
 		
 		// retorna o número de Bulls (certo na posição certa) e Cows (certo na posição errada)
