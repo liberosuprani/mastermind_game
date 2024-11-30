@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import types.BinaryColour;
+import types.BullsAndCowsCode;
 import types.Code;
 import types.MultiColour;
 
@@ -138,6 +139,29 @@ class CodeTestEquals {
 		assertEquals(actual, expected);
 
 
+	}
+	
+	@Test
+	void teste7() {
+
+		
+		ArrayList<BinaryColour> start = new ArrayList<BinaryColour>();
+
+		start.add(BinaryColour.BLACK);
+		start.add(BinaryColour.BLACK);
+		start.add(BinaryColour.WHITE);
+		
+		codeToTest1 = new Code(start);
+		BullsAndCowsCode codeToTest3 = new BullsAndCowsCode(start);
+		
+		boolean expected = true;
+		boolean actual = codeToTest1.equals(codeToTest3);
+
+		assertEquals(actual, expected);
+
+		actual = codeToTest3.equals(codeToTest1);
+
+		assertEquals(actual, expected);
 	}
 
 }

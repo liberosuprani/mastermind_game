@@ -1,21 +1,19 @@
 package types;
 
 /**
- * An interface defining a contract for color-related entities.
- * This interface requires implementing classes to provide 
- * a method that returns all possible color values.
+ * Uma interface que define um contrato para entidades relacionadas a cores.
+ * Esta interface exige que as classes que a implementam forneçam 
+ * um método que retorna todos os valores possíveis de cores.
  * 
- * @author PCO team
+ * @author Equipe PCO
  */
 public interface Colour {
 
     /**
-     * Retrieves all possible color values represented by 
-     * the implementing class.
+     * Recupera todos os valores possíveis de cores representados 
+     * pela classe que implementa esta interface.
      * 
-     * @return An array of Colour objects representing all possible colors.
+     * @return Um array de objetos Colour representando todas as cores possíveis.
      */
-    Colour[] colours();
-    
-    
+    Colour[] colours();  
 }
