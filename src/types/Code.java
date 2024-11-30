@@ -184,6 +184,10 @@ public class Code<Colour> implements Cloneable, Iterable<Colour> {
 		return new CodeIterator();
 	}
 	
+	
+	/**
+	 * Classe que implementa um iterador de Code
+	 */
 	private class CodeIterator implements Iterator<Colour>{
 
 		private int currentIndex;
