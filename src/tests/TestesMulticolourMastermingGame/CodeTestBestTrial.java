@@ -146,13 +146,15 @@ class CodeTestBestTrial {
 		MultiColour[] multicolour = MultiColour.values();
 
 		this.jogo = new MultiColourMastermindGame(0, 6, multicolour);
-
+		
 		ArrayList<MultiColour> trial = new ArrayList<MultiColour>();
 
+		// BPROOO
+		
 		trial.add(MultiColour.BLUE);
 		trial.add(MultiColour.BLUE);
 		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.PINK);
+		trial.add(MultiColour.PINK);	// BBBPOO -> 3 1
 		trial.add(MultiColour.ORANGE);
 		trial.add(MultiColour.ORANGE);
 
@@ -165,7 +167,7 @@ class CodeTestBestTrial {
 		trial.clear();
 		trial.add(MultiColour.BLUE);
 		trial.add(MultiColour.BLUE);
-		trial.add(MultiColour.BLUE);
+		trial.add(MultiColour.BLUE);	// BBBBOO -> 3 0
 		trial.add(MultiColour.BLUE);
 		trial.add(MultiColour.ORANGE);
 		trial.add(MultiColour.ORANGE);
@@ -174,8 +176,6 @@ class CodeTestBestTrial {
 
 		jogo.play(tentativa);
 
-		
-		
 		Code actual = jogo.bestTrial();
 		
 		assertEquals(expected, actual);

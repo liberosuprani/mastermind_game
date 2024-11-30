@@ -35,50 +35,47 @@ public class BullsAndCowsCode extends Code<Colour> {
 	public int[] howManyCorrect(Code<Colour> other) {
 		
 		// o código secreto
-		List<? extends Colour> secret = this.code;
+		List<? extends Colour> clonedSecret = this.getCode();
 
-		// mapas para armazenar as cores nas posições corretas e erradas
-		Map<Integer, Colour> rightPositionMap = new HashMap<Integer, Colour>();
+		// mapas para armazenar as cores corretas nas posições erradas
+		Map<Integer, Colour> correctPositionMap = new HashMap<Integer, Colour>();
 		Map<Integer, Colour> wrongPositionMap = new HashMap<Integer, Colour>();
 		
-		// itera sobre cada posição do código de tentativa
+		// variavel para marcar turno do loop, i.e se estão a ser procuradas cores na posicao certa (turn == 0)
+		// ou cores na posição errada (turn == 1)
+		int turn = 0; 
+		
 		int i = 0;
-		for (Colour currentColour : other) {
-			
-			// verifica se a cor da tentativa está no código secreto
-			if (secret.contains(currentColour)) {
+		
+		// itera sobre a quantidade de parâmetros que o retorno do método possui
+		while (turn < 2) {
+			i = 0;
+			for (Colour currentColour : other) {
 				
-				// se a cor está na posição correta (Bulls)
-				if (currentColour == secret.get(i)) {
-					rightPositionMap.put(i, currentColour);
-					
-					// remove do mapa de posições erradas caso tenha sido adicionado anteriormente
-					if (wrongPositionMap.containsKey(i))
-						wrongPositionMap.remove(i);
-				} 
-
-				// caso contrário, se a cor está na posição errada (Cows)
-				else {
-					boolean foundWrongIndex = false;
-
-					int j = 0;
-					// busca por uma posição errada para a cor (Cows)
-					while(!foundWrongIndex && j < secret.size()) {
-						// verifica se a cor naquela posição ainda não foi atribuída como Bull ou Cow
-						if (!rightPositionMap.containsKey(j) && !wrongPositionMap.containsKey(j) && secret.get(j).equals(currentColour)) {
-							foundWrongIndex = true;
-							wrongPositionMap.put(j, currentColour);
-						}
-						j++;
+				if (clonedSecret.contains(currentColour)) {
+					if (turn == 0 && currentColour == clonedSecret.get(i)) {
+						correctPositionMap.put(i, currentColour);
+						clonedSecret.set(i, null);
 					}
-				}
+					else if (turn == 1 && !correctPositionMap.containsKey(i)) {
+						wrongPositionMap.put(clonedSecret.indexOf(currentColour), currentColour);
+						
+						// muda a posição no segredo para null, assim as proximas comparacoes nao
+						// irao levar mais esta posiçao em conta
+						clonedSecret.set(clonedSecret.indexOf(currentColour), null);	
+					}
+				}	
+				i++;
+				
 			}
-			i++;
+			turn++;
 		}
 		
-		// retorna o número de Bulls (certo na posição certa) e Cows (certo na posição errada)
-		int[] result = {rightPositionMap.size(), wrongPositionMap.size()};
+		
+		// retorna o número de cores na posição certa e cores certas na posição errada
+		int[] result = {correctPositionMap.size(), wrongPositionMap.size()};
 		return result;
+		
 	}
 	
 	@Override

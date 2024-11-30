@@ -18,7 +18,7 @@ import java.util.Map;
 public class Code<Colour> implements Cloneable, Iterable<Colour> {
 
     // lista que contém as cores do código.
-	protected List<? extends Colour> code;
+	private List<? extends Colour> code;
 
     /**
      * Construtor da classe Code.
@@ -38,7 +38,12 @@ public class Code<Colour> implements Cloneable, Iterable<Colour> {
      * @return A lista de cores do código.
      */
 	public List<Colour> getCode() {
-		return (List<Colour>)this.code;
+		List<Colour> clonedCode = new ArrayList<Colour>();
+		for (Colour currentColour : this.code) {
+			clonedCode.add(currentColour);
+		}
+			
+		return clonedCode;
 	}
 
     /**
@@ -58,49 +63,39 @@ public class Code<Colour> implements Cloneable, Iterable<Colour> {
 	public int[] howManyCorrect(Code<Colour> other) {
 		
 		// código secreto
-		List<? extends Colour> secret = this.code;
+		List<? extends Colour> clonedSecret = this.clone().code;
 		
-		// mapas para armazenar as cores nas posições corretas e erradas
+		// mapa para armazenar as cores certas nas posições erradas
+		Map<Integer, Colour> correctPositionMap = new HashMap<Integer, Colour>();
 		Map<Integer, Colour> wrongPositionMap = new HashMap<Integer, Colour>();
-		Map<Integer, Colour> rightPositionMap = new HashMap<Integer, Colour>();
 		
-		// itera sobre cada posição do código de tentativa
+		// variavel para marcar turno do loop, i.e se estão a ser procuradas cores na posicao certa (turn == 0)
+		// ou cores na posição errada (turn == 1)
+		int turn = 0; 
+		
 		int i = 0;
-		for (Colour currentColour : other) {
-			
-			// verifica se a cor da tentativa está no código secreto
-			if (secret.contains(currentColour)) {
-					
-				// se a cor está na posição correta 
-				if (currentColour == secret.get(i)) {
-					rightPositionMap.put(i, currentColour);
-					
-					// remove do mapa de posições erradas caso tenha sido adicionado anteriormente
-					if (wrongPositionMap.containsKey(i))
-						wrongPositionMap.remove(i);
-				} 
-
-				// se a cor não está na posição correta, mas está no código secreto 
-				else if (!wrongPositionMap.containsValue(currentColour)) {
-					
-					boolean foundWrongIndex = false;
-
-					int j = 0;
-					while(!foundWrongIndex && j < secret.size()) {
-						// verifica se a cor ainda não foi adicionada ao mapa
-						if (!rightPositionMap.containsKey(j) && secret.get(j).equals(currentColour)) {
-							foundWrongIndex = true;
-							wrongPositionMap.put(j, currentColour);
-						}
-						j++;
+		
+		// itera sobre a quantidade de parâmetros que o retorno do método possui
+		while (turn < 2) {
+			i = 0;
+			for (Colour currentColour : other) {
+				
+				if (clonedSecret.contains(currentColour)) {
+					if (turn == 0 && currentColour == clonedSecret.get(i)) {
+						correctPositionMap.put(i, currentColour);
+						clonedSecret.set(i, null);
 					}
-				}
+					else if (turn == 1 && !correctPositionMap.containsKey(i)  && !wrongPositionMap.containsValue(currentColour)) 
+						wrongPositionMap.put(clonedSecret.indexOf(currentColour), currentColour);	
+				}	
+				i++;
+				
 			}
-			i++;
+			turn++;
 		}
 		
 		// retorna o número de cores na posição certa e cores certas na posição errada
-		int[] result = {rightPositionMap.size(), wrongPositionMap.size()};
+		int[] result = {correctPositionMap.size(), wrongPositionMap.size()};
 		return result;
 	}
 
@@ -133,7 +128,6 @@ public class Code<Colour> implements Cloneable, Iterable<Colour> {
 	public Code<Colour> clone() {
 		
 		try {
-			System.out.println(this.getClass());
 			List<Colour> clonedCode = new ArrayList<Colour>();
 			
 			for (Colour colour : this.code) 

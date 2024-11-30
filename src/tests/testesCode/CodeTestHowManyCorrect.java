@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import types.BinaryColour;
 import types.Code;
 import types.MultiColour;
+import types.BullsAndCowsCode;
 
 class CodeTestHowManyCorrect {
 
@@ -41,8 +42,6 @@ class CodeTestHowManyCorrect {
         int[] result = codeToTest1.howManyCorrect(codeToTest2);
 
         assertArrayEquals(expected, result);
-
-
 	}
 	
 	@Test
@@ -258,8 +257,6 @@ class CodeTestHowManyCorrect {
 
 	}
 	
-	
-
 	@Test
 	void teste9() {
 
@@ -290,6 +287,33 @@ class CodeTestHowManyCorrect {
         assertArrayEquals(expected, result);
 
 
+	}
+	
+	@Test
+	void teste10() {
+
+		ArrayList<BinaryColour> start = new ArrayList<BinaryColour>();
+
+		start.add(BinaryColour.BLACK);
+		start.add(BinaryColour.BLACK);
+		start.add(BinaryColour.WHITE);
+		start.add(BinaryColour.WHITE);
+		
+		codeToTest1 = new BullsAndCowsCode(start);
+		
+		ArrayList<BinaryColour> start2 = new ArrayList<BinaryColour>();
+
+		start2.add(BinaryColour.WHITE);
+		start2.add(BinaryColour.BLACK);
+		start2.add(BinaryColour.WHITE);
+		start2.add(BinaryColour.BLACK);
+		
+		codeToTest2 = new BullsAndCowsCode(start2);
+
+        int[] expected = {2, 2};
+        int[] result = codeToTest1.howManyCorrect(codeToTest2);
+
+        assertArrayEquals(expected, result);
 	}
 }
 

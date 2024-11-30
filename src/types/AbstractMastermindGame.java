@@ -13,6 +13,9 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     // pontuação do jogador
     protected int score;
     
+    // o código secreto 
+    protected Code<Colour> code; 
+
     // número total de tentativas feitas até o momento
     private int numberOfTrials;
     
@@ -24,9 +27,6 @@ public abstract class AbstractMastermindGame implements MastermindGame {
     
     // array de cores possíveis no código secreto
     private Colour[] colours;
-    
-    // o código secreto 
-    protected Code<Colour> code; 
     
     // tamanho do código secreto (número de posições)
     private int codeSize;
