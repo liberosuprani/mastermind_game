@@ -69,7 +69,7 @@ public class Main {
 
         // valida a entrada do jogador até que uma opção válida seja selecionada
         while (option != OG_MASTERMIND_OPTION && option != BULLS_AND_COWS_OPTION && option != 3) {
-            System.out.print("1-Original Mastermind\n2-Bulls and cows\n3-Exit\nOption: ");
+            System.out.print("1-Original Mastermind\n2-Bulls and cows\n3-Exit\n-> ");
             option = sc.nextInt();
             sc.nextLine();
 	        
@@ -104,7 +104,7 @@ public class Main {
                     // System.out.println("Resposta: " + game.code.getCode()); // TODO: Remover essa linha após depuração.
                     System.out.println(game.toString());
 		        	
-                    System.out.print("Attempt " + validLetters(option) + " or Hint(.): ");
+                    System.out.print("Attempt " + validLetters(option) + " or Hint(.)\n-> ");
                     userTrialInput = sc.nextLine();
 		       
                     // jogador pediu dica
@@ -126,7 +126,7 @@ public class Main {
                                 if (!isValidColourFromUserTrial(userTrialInput.charAt(i), option))
                                     System.out.println("Your attempt must have valid letters! " + validLetters(option));
 				        		
-                                System.out.print("Attempt " + validLetters(option) + " or Hint(.): ");
+                                System.out.print("Attempt " + validLetters(option) + " or Hint(.)\n-> ");
                                 userTrialInput = sc.nextLine();
 				        		
                                 // define a variável para dar restart ao loop e limpa a lista de cores da tentativa
@@ -163,12 +163,13 @@ public class Main {
 		            }	
 		        }
 
-                System.out.print("\nCongratulations, you cracked the code!\nWould you like to play again? (y/n) ");
+                System.out.print("\nCongratulations, you cracked the code!\nWould you like to play again? (y/n)\n-> ");
                 anotherRound = sc.next().charAt(0);
                 sc.nextLine();
                 game.startNewRound(); // inicia uma nova rodada
         	
             } while (Character.toUpperCase(anotherRound) == 'Y');
+            System.out.println("Thank you for playing!");
         }
     }
 }
