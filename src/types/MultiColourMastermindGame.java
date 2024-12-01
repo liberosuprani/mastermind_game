@@ -1,3 +1,8 @@
+// Grupo 2
+// Libero Suprani - 62220
+// Ravi Mughal - 62504
+// Ricardo Avelãs - 62257
+
 package types;
 
 /**
@@ -25,7 +30,7 @@ public class MultiColourMastermindGame extends AbstractMastermindGame {
      */
 	public MultiColourMastermindGame(int seed, int size, Colour[] colours) {
 		super(seed, size, colours);
-		this.givenHints = 0; // inicializa o contador de dicas fornecidas
+		this.givenHints = 0; 
 	}
 	
     /**
@@ -79,7 +84,7 @@ public class MultiColourMastermindGame extends AbstractMastermindGame {
      */
 	@Override 
 	public Colour hint() {
-		this.givenHints++; // incrementa o contador de dicas fornecidas
-		return super.hint(); // chama a implementação da classe pai para fornecer uma dica
+		this.givenHints++; 
+		return super.hint(); 
 	}
 }

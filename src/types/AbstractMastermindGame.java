@@ -1,3 +1,8 @@
+// Grupo 2
+// Libero Suprani - 62220
+// Ravi Mughal - 62504
+// Ricardo Avelãs - 62257
+
 package types;
 
 import java.util.ArrayList;
