@@ -10,7 +10,7 @@ import types.*;
 public class Main {
 	
 	// tamanho do segredo do jogo
-    final static int CODE_SIZE = 5;
+    final static int CODE_SIZE = 4;
 
     // opção para o jogo Mastermind Original
     final static int OG_MASTERMIND_OPTION = 1;
